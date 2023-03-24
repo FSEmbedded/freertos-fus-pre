@@ -15,9 +15,10 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LED_GPIO     GPIO3
-#define EXAMPLE_LED_GPIO_PIN 16U
-
+#ifdef BOARD_PICOCOREMX8MP
+#define EXAMPLE_LED_GPIO     GPIO5
+#define EXAMPLE_LED_GPIO_PIN 11U
+#endif /* BOARD_PICOCOREMX8MP */
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

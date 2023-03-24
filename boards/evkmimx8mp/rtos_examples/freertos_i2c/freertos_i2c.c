@@ -27,16 +27,18 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASE I2C3
-#define EXAMPLE_I2C_MASTER_IRQN I2C3_IRQn
+#ifdef BOARD_PICOCOREMX8MP
+#define EXAMPLE_I2C_MASTER_BASE I2C6
+#define EXAMPLE_I2C_MASTER_IRQN I2C6_IRQn
 #define EXAMPLE_I2C_MASTER_CLK_FREQ                                                         \
-    (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c3)) / \
-     (CLOCK_GetRootPostDivider(kCLOCK_RootI2c3)) / 5) /* SYSTEM PLL1 DIV5 */
-#define EXAMPLE_I2C_SLAVE_BASE I2C3
-#define EXAMPLE_I2C_SLAVE_IRQN I2C3_IRQn
+    (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c6)) / \
+     (CLOCK_GetRootPostDivider(kCLOCK_RootI2c6)) / 5) /* SYSTEM PLL1 DIV5 */
+#define EXAMPLE_I2C_SLAVE_BASE I2C6
+#define EXAMPLE_I2C_SLAVE_IRQN I2C6_IRQn
 #define EXAMPLE_I2C_SLAVE_CLK_FREQ                                                          \
-    (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c3)) / \
-     (CLOCK_GetRootPostDivider(kCLOCK_RootI2c3)) / 5) /* SYSTEM PLL1 DIV5 */
+    (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c6)) / \
+     (CLOCK_GetRootPostDivider(kCLOCK_RootI2c6)) / 5) /* SYSTEM PLL1 DIV5 */
+#endif /* BOARD_PICOCOREMX8MP */
 #define SINGLE_BOARD   0
 #define BOARD_TO_BOARD 1
 
@@ -44,7 +46,8 @@
 #if (EXAMPLE_CONNECT_I2C == BOARD_TO_BOARD)
 #define isMASTER         0
 #define isSLAVE          1
-#define I2C_MASTER_SLAVE isMASTER
+//#define I2C_MASTER_SLAVE isMASTER 	// must be defined, if device use than Master
+#define I2C_MASTER_SLAVE isSLAVE 	// must be defined, if device use than Slave
 #endif
 
 
@@ -103,10 +106,10 @@ int main(void)
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-
-    CLOCK_SetRootMux(kCLOCK_RootI2c3, kCLOCK_I2cRootmuxSysPll1Div5); /* Set I2C source to SysPLL1 Div5 160MHZ */
-    CLOCK_SetRootDivider(kCLOCK_RootI2c3, 1U, 10U);                  /* Set root clock to 160MHZ / 10 = 16MHZ */
-
+#ifdef BOARD_PICOCOREMX8MP
+    CLOCK_SetRootMux(kCLOCK_RootI2c6, kCLOCK_I2cRootmuxSysPll1Div5); /* Set I2C source to SysPLL1 Div5 160MHZ */
+    CLOCK_SetRootDivider(kCLOCK_RootI2c6, 1U, 10U);                  /* Set root clock to 160MHZ / 10 = 16MHZ */
+#endif
     NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
     NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
 

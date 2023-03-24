@@ -46,14 +46,17 @@ void BOARD_InitPins(void);                                 /*!< Function assigne
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void I2C3_DeinitPins(void);                                /*!< Function assigned for the core: Cortex-M7F[m7] */
+
+#ifdef BOARD_PICOCOREMX8MP
+void I2C6_DeinitPins(void);                                /*!< Function assigned for the core: Cortex-M7F[m7] */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void I2C3_InitPins(void);                                  /*!< Function assigned for the core: Cortex-M7F[m7] */
 
+void I2C6_InitPins(void);                                  /*!< Function assigned for the core: Cortex-M7F[m7] */
+#endif /* BOARD_PICOCOREMX8MP */
 #if defined(__cplusplus)
 }
 #endif

@@ -14,11 +14,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART            UART4
+#ifdef BOARD_PICOCOREMX8MP
+#define DEMO_UART            UART1
 #define DEMO_UART_CLK_FREQ   BOARD_DEBUG_UART_CLK_FREQ
 #define DEMO_UART_BAUDRATE   115200U
-#define DEMO_IRQn            UART4_IRQn
-#define DEMO_UART_IRQHandler UART4_IRQHandler
+#define DEMO_IRQn            UART1_IRQn
+#define DEMO_UART_IRQHandler UART1_IRQHandler
+#endif /* BOARD_PICOCOREMX8MP */
 
 /*! @brief Ring buffer size (Unit: Byte). */
 #define DEMO_RING_BUFFER_SIZE 16

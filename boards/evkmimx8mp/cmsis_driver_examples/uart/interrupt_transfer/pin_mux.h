@@ -46,13 +46,16 @@ void BOARD_InitPins(void);                                 /*!< Function assigne
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void UART4_InitPins(void);                                 /*!< Function assigned for the core: Cortex-M7F[m7] */
+
+#ifdef BOARD_PICOCOREMX8MP
+void UART1_InitPins(void);                                 /*!< Function assigned for the core: Cortex-M7F[m7] */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void UART4_DeinitPins(void);                               /*!< Function assigned for the core: Cortex-M7F[m7] */
+void UART1_DeinitPins(void);                               /*!< Function assigned for the core: Cortex-M7F[m7] */
+#endif /* BOARD_PICOCOREMX8MP */
 
 #if defined(__cplusplus)
 }

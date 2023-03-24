@@ -72,17 +72,17 @@ UART4_InitPins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void UART4_InitPins(void) {                                /*!< Function assigned for the core: Cortex-M7F[m7] */
-    IOMUXC_SetPinMux(IOMUXC_UART4_RXD_UART4_RX, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_UART4_RXD_UART4_RX, 
-                        IOMUXC_SW_PAD_CTL_PAD_DSE(3U) |
+void UART1_InitPins(void) {                                /*!< Function assigned for the core: Cortex-M7F[m7] */
+#ifdef BOARD_PICOCOREMX8MP
+IOMUXC_SetPinMux(IOMUXC_SAI2_RXFS_UART1_TX, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI2_RXFS_UART1_TX,
                         IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_UART4_TXD_UART4_TX, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_UART4_TXD_UART4_TX, 
-                        IOMUXC_SW_PAD_CTL_PAD_DSE(3U) |
+    IOMUXC_SetPinMux(IOMUXC_SAI2_RXC_UART1_RX, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI2_RXC_UART1_RX,
                         IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PE_MASK);
+#endif /* BOARD_PICOCOREMX8MP */
 }
 
 
@@ -102,9 +102,11 @@ UART4_DeinitPins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void UART4_DeinitPins(void) {                              /*!< Function assigned for the core: Cortex-M7F[m7] */
-    IOMUXC_SetPinMux(IOMUXC_UART4_RXD_GPIO5_IO28, 0U);
-    IOMUXC_SetPinMux(IOMUXC_UART4_TXD_GPIO5_IO29, 0U);
+void UART1_DeinitPins(void) {                              /*!< Function assigned for the core: Cortex-M7F[m7] */
+#ifdef BOARD_PICOCOREMX8MP
+    IOMUXC_SetPinMux(IOMUXC_SAI2_RXFS_GPIO4_IO21, 0U);
+    IOMUXC_SetPinMux(IOMUXC_SAI2_RXC_GPIO4_IO22, 0U);
+#endif /* BOARD_PICOCOREMX8MP */
 }
 
 /***********************************************************************************************************************

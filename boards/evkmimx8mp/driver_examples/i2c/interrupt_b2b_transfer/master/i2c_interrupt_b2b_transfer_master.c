@@ -18,10 +18,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASEADDR I2C3
+#ifdef BOARD_PICOCOREMX8MP
+#define EXAMPLE_I2C_MASTER_BASEADDR I2C6
 #define I2C_MASTER_CLK_FREQ                                                                 \
-    (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c3)) / \
-     (CLOCK_GetRootPostDivider(kCLOCK_RootI2c3)) / 5) /* SYSTEM PLL1 DIV5 */
+    (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c6)) / \
+     (CLOCK_GetRootPostDivider(kCLOCK_RootI2c6)) / 5) /* SYSTEM PLL1 DIV5 */
+#endif /* BOARD_PICOCOREMX8MP */
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
 #define I2C_BAUDRATE               100000U

@@ -19,7 +19,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER Driver_I2C3
+#ifdef BOARD_PICOCOREMX8MP
+#define EXAMPLE_I2C_MASTER Driver_I2C6
+#endif /* BOARD_PICOCOREMX8MP */
 #define I2C_MASTER_SLAVE_ADDR 0x7EU
 #define I2C_DATA_LENGTH       32U
 
@@ -38,13 +40,13 @@ volatile bool g_MasterCompletionFlag = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-uint32_t I2C3_GetFreq(void)
+#ifdef BOARD_PICOCOREMX8MP
+uint32_t I2C6_GetFreq(void)
 {
-    return (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c3)) /
-            (CLOCK_GetRootPostDivider(kCLOCK_RootI2c3)) / 5); /* SYSTEM PLL1 DIV5 */
+    return (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c6)) /
+            (CLOCK_GetRootPostDivider(kCLOCK_RootI2c6)) / 5); /* SYSTEM PLL1 DIV5 */
 }
-
+#endif /* BOARD_PICOCOREMX8MP */
 
 void I2C_MasterSignalEvent_t(uint32_t event)
 {
@@ -70,10 +72,10 @@ int main(void)
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-
-    CLOCK_SetRootMux(kCLOCK_RootI2c3, kCLOCK_I2cRootmuxSysPll1Div5); /* Set I2C source to SysPLL1 Div5 160MHZ */
-    CLOCK_SetRootDivider(kCLOCK_RootI2c3, 1U, 10U);                  /* Set root clock to 160MHZ / 10 = 16MHZ */
-
+#ifdef BOARD_PICOCOREMX8MP
+    CLOCK_SetRootMux(kCLOCK_RootI2c6, kCLOCK_I2cRootmuxSysPll1Div5); /* Set I2C source to SysPLL1 Div5 160MHZ */
+    CLOCK_SetRootDivider(kCLOCK_RootI2c6, 1U, 10U);                  /* Set root clock to 160MHZ / 10 = 16MHZ */
+#endif /* BOARD_PICOCOREMX8MP */
     /*Init I2C*/
     EXAMPLE_I2C_MASTER.Initialize(I2C_MasterSignalEvent_t);
 

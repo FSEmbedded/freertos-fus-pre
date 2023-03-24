@@ -121,9 +121,10 @@ int main(void)
     CLOCK_SetRootDivider(kCLOCK_RootFlexCan1, 2U, 5U);                   /* Set root clock to 800MHZ / 10 = 80MHZ */
 
     /* GPIO5_IO05 is used to control CAN1_STBY which is ebaled active high */
-    gpio_pin_config_t config = {kGPIO_DigitalOutput, 1, kGPIO_NoIntmode};
-    GPIO_PinInit(GPIO5, 5U, &config);
-
+#ifdef BOARD_PICOCOREMX8MP
+    //gpio_pin_config_t config = {kGPIO_DigitalOutput, 1, kGPIO_NoIntmode};
+    //GPIO_PinInit(GPIO1, 10U, &config);
+#endif /* BOARD_PICOCOREMX8MP */
     LOG_INFO("\r\n==FlexCAN loopback functional example -- Start.==\r\n\r\n");
 
     /* Init FlexCAN module. */

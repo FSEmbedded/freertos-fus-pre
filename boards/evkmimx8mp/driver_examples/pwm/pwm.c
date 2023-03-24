@@ -16,9 +16,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PWM_BASEADDR   PWM4
-#define DEMO_PWM_IRQn       PWM4_IRQn
-#define DEMO_PWM_IRQHandler PWM4_IRQHandler
+#define DEMO_PWM_BASEADDR   PWM3
+#define DEMO_PWM_IRQn       PWM3_IRQn
+#define DEMO_PWM_IRQHandler PWM3_IRQHandler
 /*! @brief PWM period value. PWMO (Hz) = PCLK(Hz) / (period +2) */
 #define PWM_PERIOD_VALUE 30
 
@@ -102,6 +102,11 @@ int main(void)
      * config->halfWordSwap = kPWM_HalfWordNoSwap;
      */
     PWM_GetDefaultConfig(&pwmConfig);
+
+    /* config->enableStopMode = true; */
+    /* config->enableDozeMode = true; */
+    /* config->enableWaitMode = true; */
+    /* config->enableDebugMode = true; */
 
     /* Initialize PWM module */
     PWM_Init(DEMO_PWM_BASEADDR, &pwmConfig);

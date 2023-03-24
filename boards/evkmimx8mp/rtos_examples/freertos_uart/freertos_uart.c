@@ -25,9 +25,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART          UART4
+#ifdef BOARD_PICOCOREMX8MP
+#define DEMO_UART          UART1
 #define DEMO_UART_CLK_FREQ BOARD_DEBUG_UART_CLK_FREQ
-#define DEMO_IRQn          UART4_IRQn
+#define DEMO_IRQn          UART1_IRQn
+#endif /* BOARD_PICOCOREMX8MP */
 /* Task priorities. */
 #define uart_task_PRIORITY (configMAX_PRIORITIES - 1)
 /*******************************************************************************

@@ -14,7 +14,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART          UART4
+# ifdef BOARD_PICOCOREMX8MP
+#define DEMO_UART          UART1
+#endif
 #define DEMO_UART_CLK_FREQ BOARD_DEBUG_UART_CLK_FREQ
 
 #define ECHO_BUFFER_LENGTH 8

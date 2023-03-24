@@ -45,6 +45,10 @@ extern ARM_DRIVER_I2C Driver_I2C3;
 extern ARM_DRIVER_I2C Driver_I2C4;
 #endif
 
+#if defined(I2C6) && defined(RTE_I2C6) && RTE_I2C6
+extern ARM_DRIVER_I2C Driver_I2C6;
+#endif
+
 /* I2C Driver state flags */
 #define I2C_FLAG_UNINIT (0UL)
 #define I2C_FLAG_INIT   (1UL << 0)

@@ -342,9 +342,10 @@ int main(void)
     CLOCK_SetRootDivider(kCLOCK_RootFlexCan1, 2U, 5U);                   /* Set root clock to 800MHZ / 10 = 80MHZ */
 
     /* GPIO5_IO05 is used to control CAN1_STBY which is ebaled active high */
-    gpio_pin_config_t config = {kGPIO_DigitalOutput, 1, kGPIO_NoIntmode};
-    GPIO_PinInit(GPIO5, 5U, &config);
-
+#ifdef BOARD_PICOCOREMX8MP
+    //gpio_pin_config_t config = {kGPIO_DigitalOutput, 1, kGPIO_NoIntmode};
+    //GPIO_PinInit(GPIO5, 5U, &config);
+#endif /* BOARD_PICOCOREMX8MP */
     LOG_INFO("********* FLEXCAN PingPong Buffer Example *********\r\n");
     LOG_INFO("    Message format: Standard (11 bit id)\r\n");
     LOG_INFO("    Node B Message buffer %d to %d used as Rx queue 1.\r\n", RX_QUEUE_BUFFER_BASE, RX_QUEUE_BUFFER_END_1);

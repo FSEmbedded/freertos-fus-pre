@@ -27,7 +27,7 @@
 
 #if ((defined(RTE_I2C0) && RTE_I2C0 && defined(I2C0)) || (defined(RTE_I2C1) && RTE_I2C1 && defined(I2C1)) || \
      (defined(RTE_I2C2) && RTE_I2C2 && defined(I2C2)) || (defined(RTE_I2C3) && RTE_I2C3 && defined(I2C3)) || \
-     (defined(RTE_I2C4) && RTE_I2C4 && defined(I2C4)))
+     (defined(RTE_I2C4) && RTE_I2C4 && defined(I2C4)) || (defined(RTE_I2C6) && RTE_I2C6 && defined(I2C6)))
 
 #define ARM_I2C_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (2))
 
@@ -81,7 +81,8 @@ static ARM_I2C_CAPABILITIES I2Cx_GetCapabilities(void)
      (defined(RTE_I2C1) && RTE_I2C1 && !(defined(RTE_I2C1_DMA_EN) && RTE_I2C1_DMA_EN)) || \
      (defined(RTE_I2C2) && RTE_I2C2 && !(defined(RTE_I2C2_DMA_EN) && RTE_I2C2_DMA_EN)) || \
      (defined(RTE_I2C3) && RTE_I2C3 && !(defined(RTE_I2C3_DMA_EN) && RTE_I2C3_DMA_EN)) || \
-     (defined(RTE_I2C4) && RTE_I2C4 && !(defined(RTE_I2C4_DMA_EN) && RTE_I2C4_DMA_EN)))
+     (defined(RTE_I2C4) && RTE_I2C4 && !(defined(RTE_I2C4_DMA_EN) && RTE_I2C4_DMA_EN)) || \
+     (defined(RTE_I2C6) && RTE_I2C6 && !(defined(RTE_I2C6_DMA_EN) && RTE_I2C6_DMA_EN)))
 
 static void KSDK_I2C_SLAVE_InterruptCallback(I2C_Type *base, i2c_slave_transfer_t *xfer, void *userData)
 {
@@ -979,5 +980,95 @@ ARM_DRIVER_I2C Driver_I2C4 = {I2Cx_GetVersion,
                               I2C4_InterruptGetDataCount,
                               I2C4_InterruptControl,
                               I2C4_InterruptGetStatus};
+
+#endif
+
+#if defined(I2C6) && defined(RTE_I2C6) && RTE_I2C6
+
+/* User needs to provide the implementation for I2C6_GetFreq/InitPins/DeinitPins
+in the application for enabling according instance. */
+extern uint32_t I2C6_GetFreq(void);
+
+static cmsis_i2c_resource_t I2C6_Resource = {I2C6, I2C6_GetFreq};
+static cmsis_i2c_handle_t I2C6_Handle;
+
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+ARMCC_SECTION("i2c3_interrupt_driver_state")
+static cmsis_i2c_interrupt_driver_state_t I2C6_InterruptDriverState = {
+#else
+static cmsis_i2c_interrupt_driver_state_t I2C6_InterruptDriverState = {
+#endif
+    &I2C6_Resource,
+    &I2C6_Handle,
+};
+
+static int32_t I2C6_InterruptInitialize(ARM_I2C_SignalEvent_t cb_event)
+{
+#ifdef RTE_I2C6_PIN_INIT
+    RTE_I2C6_PIN_INIT();
+#endif
+    return I2C_InterruptInitialize(cb_event, &I2C6_InterruptDriverState);
+}
+
+static int32_t I2C6_InterruptUninitialize(void)
+{
+#ifdef RTE_I2C6_PIN_DEINIT
+    RTE_I2C6_PIN_DEINIT();
+#endif
+    return I2C_InterruptUninitialize(&I2C6_InterruptDriverState);
+}
+
+static int32_t I2C6_InterruptPowerControl(ARM_POWER_STATE state)
+{
+    return I2C_InterruptPowerControl(state, &I2C6_InterruptDriverState);
+}
+
+static int32_t I2C6_Master_InterruptTransmit(uint32_t addr, const uint8_t *data, uint32_t num, bool xfer_pending)
+{
+    return I2C_Master_InterruptTransmit(addr, data, num, xfer_pending, &I2C6_InterruptDriverState);
+}
+
+static int32_t I2C6_Master_InterruptReceive(uint32_t addr, uint8_t *data, uint32_t num, bool xfer_pending)
+{
+    return I2C_Master_InterruptReceive(addr, data, num, xfer_pending, &I2C6_InterruptDriverState);
+}
+
+static int32_t I2C6_Slave_InterruptTransmit(const uint8_t *data, uint32_t num)
+{
+    return I2C_Slave_InterruptTransmit(data, num, &I2C6_InterruptDriverState);
+}
+
+static int32_t I2C6_Slave_InterruptReceive(uint8_t *data, uint32_t num)
+{
+    return I2C_Slave_InterruptReceive(data, num, &I2C6_InterruptDriverState);
+}
+
+static int32_t I2C6_InterruptGetDataCount(void)
+{
+    return I2C_InterruptGetDataCount(&I2C6_InterruptDriverState);
+}
+
+static int32_t I2C6_InterruptControl(uint32_t control, uint32_t arg)
+{
+    return I2C_InterruptControl(control, arg, &I2C6_InterruptDriverState);
+}
+
+static ARM_I2C_STATUS I2C6_InterruptGetStatus(void)
+{
+    return I2C_InterruptGetStatus(&I2C6_InterruptDriverState);
+}
+
+ARM_DRIVER_I2C Driver_I2C6 = {I2Cx_GetVersion,
+                              I2Cx_GetCapabilities,
+                              I2C6_InterruptInitialize,
+                              I2C6_InterruptUninitialize,
+                              I2C6_InterruptPowerControl,
+                              I2C6_Master_InterruptTransmit,
+                              I2C6_Master_InterruptReceive,
+                              I2C6_Slave_InterruptTransmit,
+                              I2C6_Slave_InterruptReceive,
+                              I2C6_InterruptGetDataCount,
+                              I2C6_InterruptControl,
+                              I2C6_InterruptGetStatus};
 
 #endif

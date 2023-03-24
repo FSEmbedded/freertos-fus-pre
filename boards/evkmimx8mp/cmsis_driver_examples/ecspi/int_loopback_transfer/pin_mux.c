@@ -55,14 +55,16 @@ BOARD_InitPins:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {                                /*!< Function assigned for the core: Cortex-M7F[m7] */
-    IOMUXC_SetPinMux(IOMUXC_UART4_RXD_UART4_RX, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_UART4_RXD_UART4_RX, 
+#ifdef BOARD_PICOCOREMX8MP
+    IOMUXC_SetPinMux(IOMUXC_SAI2_RXFS_UART1_TX, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI2_RXFS_UART1_TX,
                         IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_UART4_TXD_UART4_TX, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_UART4_TXD_UART4_TX, 
+    IOMUXC_SetPinMux(IOMUXC_SAI2_RXC_UART1_RX, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI2_RXC_UART1_RX,
                         IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PE_MASK);
+#endif /* BOARD_PICOCOREMX8MP */
 }
 
 
@@ -85,17 +87,19 @@ ECSPI2_DeinitPins:
  *
  * END ****************************************************************************************************************/
 void ECSPI2_DeinitPins(void) {                             /*!< Function assigned for the core: Cortex-M7F[m7] */
+#ifdef BOARD_PICOCOREMX8MP
     IOMUXC_SetPinMux(IOMUXC_ECSPI2_MISO_GPIO5_IO12, 0U);
     IOMUXC_SetPinMux(IOMUXC_ECSPI2_MOSI_GPIO5_IO11, 0U);
     IOMUXC_SetPinMux(IOMUXC_ECSPI2_SCLK_GPIO5_IO10, 0U);
     IOMUXC_SetPinMux(IOMUXC_ECSPI2_SS0_GPIO5_IO13, 0U);
+#endif /* BOARD_PICOCOREMX8MP */
 }
 
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 ECSPI2_InitPins:
-- options: {callFromInitBoot: 'false', coreID: cm7}
+- options: {callFromInitBoot: 'false', coreID: m7}
 - pin_list:
   - {pin_num: AH20, peripheral: ECSPI2, signal: ecspi_miso, pin_signal: ECSPI2_MISO, PE: Disabled, HYS: Schmitt, FSEL: Slow, DSE: X2}
   - {pin_num: AJ21, peripheral: ECSPI2, signal: ecspi_mosi, pin_signal: ECSPI2_MOSI, PE: Disabled, HYS: Schmitt, DSE: X2}
@@ -111,22 +115,24 @@ ECSPI2_InitPins:
  *
  * END ****************************************************************************************************************/
 void ECSPI2_InitPins(void) {                               /*!< Function assigned for the core: Cortex-M7F[m7] */
+#ifdef BOARD_PICOCOREMX8MP
     IOMUXC_SetPinMux(IOMUXC_ECSPI2_MISO_ECSPI2_MISO, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_ECSPI2_MISO_ECSPI2_MISO, 
+    IOMUXC_SetPinConfig(IOMUXC_ECSPI2_MISO_ECSPI2_MISO,
                         IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
                         IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);
     IOMUXC_SetPinMux(IOMUXC_ECSPI2_MOSI_ECSPI2_MOSI, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_ECSPI2_MOSI_ECSPI2_MOSI, 
+    IOMUXC_SetPinConfig(IOMUXC_ECSPI2_MOSI_ECSPI2_MOSI,
                         IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
                         IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);
     IOMUXC_SetPinMux(IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK, 
+    IOMUXC_SetPinConfig(IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK,
                         IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
                         IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);
     IOMUXC_SetPinMux(IOMUXC_ECSPI2_SS0_ECSPI2_SS0, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_ECSPI2_SS0_ECSPI2_SS0, 
+    IOMUXC_SetPinConfig(IOMUXC_ECSPI2_SS0_ECSPI2_SS0,
                         IOMUXC_SW_PAD_CTL_PAD_DSE(2U) |
                         IOMUXC_SW_PAD_CTL_PAD_HYS_MASK);
+#endif /* BOARD_PICOCOREMX8MP */
 }
 
 /***********************************************************************************************************************

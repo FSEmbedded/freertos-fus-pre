@@ -18,7 +18,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_SLAVE_BASEADDR I2C3
+#ifdef BOARD_PICOCOREMX8MP
+#define EXAMPLE_I2C_SLAVE_BASEADDR I2C6
+#endif /* BOARD_PICOCOREMX8MP */
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
 #define I2C_DATA_LENGTH            32U

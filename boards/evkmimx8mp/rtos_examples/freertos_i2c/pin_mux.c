@@ -57,30 +57,30 @@ BOARD_InitPins:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {                                /*!< Function assigned for the core: Cortex-M7F[m7] */
-    IOMUXC_SetPinMux(IOMUXC_I2C3_SCL_I2C3_SCL, 1U);
-    IOMUXC_SetPinConfig(IOMUXC_I2C3_SCL_I2C3_SCL, 
+#ifdef BOARD_PICOCOREMX8MP
+    IOMUXC_SetPinMux(IOMUXC_HDMI_HPD_I2C6_SDA, 1U);
+    IOMUXC_SetPinConfig(IOMUXC_HDMI_HPD_I2C6_SDA,
                         IOMUXC_SW_PAD_CTL_PAD_DSE(3U) |
                         IOMUXC_SW_PAD_CTL_PAD_FSEL_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_HYS_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_I2C3_SDA_I2C3_SDA, 1U);
-    IOMUXC_SetPinConfig(IOMUXC_I2C3_SDA_I2C3_SDA, 
+    IOMUXC_SetPinMux(IOMUXC_HDMI_CEC_I2C6_SCL, 1U);
+    IOMUXC_SetPinConfig(IOMUXC_HDMI_CEC_I2C6_SCL,
                         IOMUXC_SW_PAD_CTL_PAD_DSE(3U) |
                         IOMUXC_SW_PAD_CTL_PAD_FSEL_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_HYS_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_UART4_RXD_UART4_RX, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_UART4_RXD_UART4_RX, 
-                        IOMUXC_SW_PAD_CTL_PAD_DSE(3U) |
+    IOMUXC_SetPinMux(IOMUXC_SAI2_RXFS_UART1_TX, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI2_RXFS_UART1_TX,
                         IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PE_MASK);
-    IOMUXC_SetPinMux(IOMUXC_UART4_TXD_UART4_TX, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_UART4_TXD_UART4_TX, 
-                        IOMUXC_SW_PAD_CTL_PAD_DSE(3U) |
+    IOMUXC_SetPinMux(IOMUXC_SAI2_RXC_UART1_RX, 0U);
+    IOMUXC_SetPinConfig(IOMUXC_SAI2_RXC_UART1_RX,
                         IOMUXC_SW_PAD_CTL_PAD_PUE_MASK |
                         IOMUXC_SW_PAD_CTL_PAD_PE_MASK);
+#endif /* BOARD_PICOCOREMX8MP */
 }
 
 /***********************************************************************************************************************

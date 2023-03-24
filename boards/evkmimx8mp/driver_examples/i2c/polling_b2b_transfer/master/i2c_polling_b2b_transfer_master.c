@@ -18,11 +18,13 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASEADDR I2C3
+#ifdef BOARD_PICOCOREMX8MP
+#define EXAMPLE_I2C_MASTER_BASEADDR I2C6
+#define I2C_MASTER_CLK kCLOCK_RootI2c6
 #define I2C_MASTER_CLK_FREQ                                                                 \
-    (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c3)) / \
-     (CLOCK_GetRootPostDivider(kCLOCK_RootI2c3)) / 5) /* SYSTEM PLL1 DIV5 */
-
+    (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c6)) / \
+     (CLOCK_GetRootPostDivider(kCLOCK_RootI2c6)) / 5) /* SYSTEM PLL1 DIV5 */
+#endif /* BOARD_PICOCOREMX8MP */
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
 #define I2C_BAUDRATE               100000U
 #define I2C_DATA_LENGTH            32U
@@ -64,8 +66,9 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-    CLOCK_SetRootMux(kCLOCK_RootI2c3, kCLOCK_I2cRootmuxSysPll1Div5); /* Set I2C source to SysPLL1 Div5 160MHZ */
-    CLOCK_SetRootDivider(kCLOCK_RootI2c3, 1U, 10U);                  /* Set root clock to 160MHZ / 10 = 16MHZ */
+
+    CLOCK_SetRootMux(I2C_MASTER_CLK, kCLOCK_I2cRootmuxSysPll1Div5); /* Set I2C source to SysPLL1 Div5 160MHZ */
+    CLOCK_SetRootDivider(I2C_MASTER_CLK, 1U, 10U);                  /* Set root clock to 160MHZ / 10 = 16MHZ */
 
     PRINTF("\r\nI2C board2board polling example -- Master transfer.\r\n");
 

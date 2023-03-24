@@ -14,7 +14,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART Driver_USART4
+#ifdef BOARD_PICOCOREMX8MP
+#define DEMO_USART Driver_USART1
+#endif /* BOARD_PICOCOREMX8MP */
 #define ECHO_BUFFER_LENGTH 8
 /*******************************************************************************
  * Prototypes
@@ -37,10 +39,13 @@ volatile bool rxOnGoing                = false;
  * Code
  ******************************************************************************/
 
-uint32_t UART4_GetFreq(void)
+#ifdef BOARD_PICOCOREMX8MP
+uint32_t UART1_GetFreq(void)
 {
     return BOARD_DEBUG_UART_CLK_FREQ;
 }
+#endif /* BOARD_PICOCOREMX8MP */
+
 void USART_SignalEvent_t(uint32_t event)
 {
     if (ARM_USART_EVENT_SEND_COMPLETE == event)

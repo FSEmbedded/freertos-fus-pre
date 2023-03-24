@@ -17,16 +17,17 @@
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_UART_DMA_BASEADDR SDMAARM1
-#define DEMO_UART                 UART4
-#define DEMO_IRQn                 UART4_IRQn
+#ifdef BOARD_PICOCOREMX8MP
+#define DEMO_UART                 UART1
+#define DEMO_IRQn                 UART1_IRQn
 #define DEMO_UART_CLK_FREQ        BOARD_DEBUG_UART_CLK_FREQ
 #define UART_RX_DMA_CHANNEL       1U
 #define UART_TX_DMA_CHANNEL       2U
-#define UART_RX_DMA_REQUEST       (28)
-#define UART_TX_DMA_REQUEST       (29)
-#define DEMO_UART_IRQHandler      UART4_IRQHandler
+#define UART_RX_DMA_REQUEST       (22)
+#define UART_TX_DMA_REQUEST       (23)
+#define DEMO_UART_IRQHandler      UART1_IRQHandler
 #define ECHO_BUFFER_LENGTH 8
-
+#endif /* BOARD_PICOCOREMX8MP */
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
